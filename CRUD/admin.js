@@ -23,3 +23,17 @@ async function addPost(){
     let data = await res.json()
     console.log(data)
 }
+
+async function deletePost(){
+    let id = document.getElementById("delete_id").value
+
+    let res = await fetch(`http://localhost:3000/posts/${id}`,{
+        method : "DELETE",
+        headers : {
+            "Content-Type":"application/json",
+        },
+    })
+    let data = await res.json()
+    console.log(data)
+   
+}
