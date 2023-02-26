@@ -19,28 +19,62 @@
         #box > div{
             box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
             color: teal;
+            
         }
         #box > div:hover{
             color: white;
             background-color: black;
         }
+        #page{
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div id="box"></div>
+    <div id="page">
+    <button class="btn" id="prev">Prev</button>
+    <span id="current">1</span>
+    <button class="btn" id="next">Next</button>
+    </div>
+    
 </body>
 </html>
 <script>
 const box = document.querySelector("#box")
 
+const current = document.querySelector("#current")
+const prevPage = document.querySelector("#prev")
+const nextPage = document.querySelector("#next")
+
+let page = 0
+prevPage.addEventListener("click", ()=>{
+if(page>1){
+    page--;
+    current.textContent=page;
+    getData()
+}
+
+})
+
+nextPage.addEventListener("click", ()=>{
+    page++
+    current.textContent=page
+getData()
+})
+
 const getData = async ()=>{
-let res = await fetch(`https://jsonplaceholder.typicode.com/comments`)
+let res = await fetch(`https://jsonplaceholder.typicode.com/comments?page=1&limit=10`)
 let data = await res.json()
 console.log(data)
 render(data)
 }
 
+getData()
+
 const render = (data) =>{
+    box.innerHTML=""
     data.map((elem)=>{
         div = document.createElement("div")
         const id = document.createElement("p")
@@ -62,7 +96,6 @@ const render = (data) =>{
 
 
 
-getData()
 
 
 </script>
